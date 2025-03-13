@@ -12,6 +12,7 @@ import { BrainIcon, MapPinIcon, ClockIcon, PlusCircleIcon, TrashIcon } from "luc
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import TermsAndConditions from "@/components/terms-and-conditions"
+import PrivacyPolicy from "@/components/privacy-policy"
 
 export default function OnboardingPage() {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ export default function OnboardingPage() {
   const [agreeToTerms, setAgreeToTerms] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showTerms, setShowTerms] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
 
   // For specialist certifications
   const [certifications, setCertifications] = useState([{ type: "", licenseNumber: "", file: null }])
@@ -151,9 +153,9 @@ export default function OnboardingPage() {
                       terms of service
                     </button>{" "}
                     and{" "}
-                    <a href="#" className="text-primary underline">
+                    <button type="button" onClick={() => setShowPrivacy(true)} className="text-primary underline">
                       privacy policy
-                    </a>
+                    </button>
                   </label>
                 </div>
               </div>
@@ -263,9 +265,9 @@ export default function OnboardingPage() {
                       terms of service
                     </button>{" "}
                     and{" "}
-                    <a href="#" className="text-primary underline">
+                    <button type="button" onClick={() => setShowPrivacy(true)} className="text-primary underline">
                       privacy policy
-                    </a>
+                    </button>
                   </label>
                 </div>
               </div>
@@ -273,6 +275,7 @@ export default function OnboardingPage() {
           )}
 
           {showTerms && <TermsAndConditions onClose={() => setShowTerms(false)} />}
+          {showPrivacy && <PrivacyPolicy onClose={() => setShowPrivacy(false)} />}
         </CardContent>
         <CardFooter className="flex justify-between">
           {step > 1 ? (
