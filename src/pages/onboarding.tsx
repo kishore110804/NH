@@ -25,7 +25,8 @@ export default function OnboardingPage() {
   const [showPrivacy, setShowPrivacy] = useState(false)
 
   // For specialist certifications
-  const [certifications, setCertifications] = useState([{ type: "", licenseNumber: "", file: null }])
+  type Certification = { type: string; licenseNumber: string; file: File | null }
+  const [certifications, setCertifications] = useState<Certification[]>([{ type: "", licenseNumber: "", file: null }])
 
   const certificationTypes = [
     "USMLE (United States Medical Licensing Examination)",
@@ -74,13 +75,13 @@ export default function OnboardingPage() {
     setCertifications([...certifications, { type: "", licenseNumber: "", file: null }])
   }
 
-  const removeCertification = (index) => {
+  const removeCertification = (index: number) => {
     const newCertifications = [...certifications]
     newCertifications.splice(index, 1)
     setCertifications(newCertifications)
   }
 
-  const updateCertification = (index, field, value) => {
+  const updateCertification = (index: number, field: keyof typeof certifications[0], value: any) => {
     const newCertifications = [...certifications]
     newCertifications[index][field] = value
     setCertifications(newCertifications)
