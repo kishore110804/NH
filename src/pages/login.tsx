@@ -63,7 +63,7 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-primary underline-offset-4 hover:underline">
+            <Link to="/sign-up" className="text-primary underline-offset-4 hover:underline">
               Sign up
             </Link>
           </div>
