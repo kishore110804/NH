@@ -1,20 +1,34 @@
-import { Link, useNavigate } from "react-router-dom"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainIcon, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { BrainIcon, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/lib/firebase"; // Make sure you have Firebase setup in this path
 
 export default function LoginPage() {
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-      navigate("/dashboard")
-    }, 1500)
-  }
+    setIsLoading(true);
+    
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider); // Firebase Google login
+      const user = result.user;
+      console.log(user); // Log user details for debugging
+
+      // After successful login, navigate to the dashboard
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error during Google sign-in:", error);
+      // Handle errors accordingly, for example, showing a notification to the user
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 py-12 px-4 sm:px-6 lg:px-8">
@@ -70,6 +84,5 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
-
