@@ -7,7 +7,7 @@ import { BrainIcon } from "lucide-react";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 
 export default function SignupPage() {
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 py-12 px-4 sm:px-6 lg:px-8">
