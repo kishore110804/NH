@@ -1,31 +1,39 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/lib/firebase"; // Import Firebase auth
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface GoogleSignInButtonProps {
-  isSignUp?: boolean
+  isSignUp?: boolean;
 }
 
 export default function GoogleSignInButton({ isSignUp = false }: GoogleSignInButtonProps) {
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
 
-    // Simulate authentication
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider); // Firebase sign-in with Google
 
+      const user = result.user;
+      console.log(user); // You can access user info here
+
+      // After successful authentication
       if (isSignUp) {
-        navigate("/onboarding")
+        // Redirect to onboarding page after sign-up
+        window.location.href = "/onboarding";
       } else {
-        navigate("/dashboard")
+        // Redirect to dashboard after sign-in
+        window.location.href = "/dashboard";
       }
-    }, 1500)
-  }
+    } catch (error) {
+      console.error("Error during Google sign-in:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
@@ -58,6 +66,5 @@ export default function GoogleSignInButton({ isSignUp = false }: GoogleSignInBut
         </div>
       )}
     </Button>
-  )
+  );
 }
-

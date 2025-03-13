@@ -1,17 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BrainIcon } from "lucide-react"
-import GoogleSignInButton from "@/components/google-sign-in-button"
-// import { Checkbox } from "@/components/ui/checkbox"
-// import TermsAndConditions from "@/components/terms-and-conditions"
-// import PrivacyPolicy from "@/components/privacy-policy"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { BrainIcon } from "lucide-react";
+import GoogleSignInButton from "@/components/google-sign-in-button";
 
 export default function SignupPage() {
-  // const [showTerms, setShowTerms] = useState(false)
-  // const [showPrivacy, setShowPrivacy] = useState(false)
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 py-12 px-4 sm:px-6 lg:px-8">
@@ -27,7 +23,7 @@ export default function SignupPage() {
           <div className="space-y-2">
             <GoogleSignInButton isSignUp />
           </div>
-          
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm text-muted-foreground">
@@ -38,10 +34,6 @@ export default function SignupPage() {
           </div>
         </CardFooter>
       </Card>
-
-      {/* {showTerms && <TermsAndConditions onClose={() => setShowTerms(false)} />}
-      {showPrivacy && <PrivacyPolicy onClose={() => setShowPrivacy(false)} />} */}
     </div>
-  )
+  );
 }
-
