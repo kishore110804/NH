@@ -66,7 +66,7 @@ export default function OnboardingPage() {
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false)
-      navigate(isDoctor ? "/doctor-dashboard" : "/dashboard")
+      navigate(isDoctor ? "/doc-dashboard" : "/dashboard")
     }, 1500)
   }
 
