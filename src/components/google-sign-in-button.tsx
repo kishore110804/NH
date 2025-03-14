@@ -1,6 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth, db } from "@/lib/firebase"; // Import Firestore
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import { auth } from "@/lib/firebase"; // Import Firebase auth
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -16,38 +15,19 @@ export default function GoogleSignInButton({ isSignUp = false }: GoogleSignInBut
 
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider); // Firebase sign-in with Google
+
       const user = result.user;
+      console.log(user); // You can access user info here
 
-      if (!user) throw new Error("User not found");
-
-      // Extract first name and last name
-      const fullName = user.displayName || "";
-      const nameParts = fullName.split(" ");
-      const firstName = nameParts[0] || "";
-      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : ""; // Get full last name
-
-      console.log("Saving to Firestore", { firstName, lastName, email: user.email, uid: user.uid });
-
-      // Save to Firestore
-      const userRef = doc(db, "users", user.uid);
-      await setDoc(userRef, {
-        firstName,
-        lastName,
-        email: user.email,
-        uid: user.uid,
-      });
-
-      // Verify data after writing
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        console.log("User data saved and retrieved:", userSnap.data());
+      // After successful authentication
+      if (isSignUp) {
+        // Redirect to onboarding page after sign-up
+        window.location.href = "/onboarding";
       } else {
-        console.log("No document found after write");
+        // Redirect to dashboard after sign-in
+        window.location.href = "/dashboard";
       }
-
-      // Redirect
-      window.location.href = isSignUp ? "/onboarding" : "/dashboard";
     } catch (error) {
       console.error("Error during Google sign-in:", error);
     } finally {

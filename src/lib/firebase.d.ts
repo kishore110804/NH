@@ -1,7 +1,7 @@
-declare module "@/lib/firebase" {
-    import { Auth } from "firebase/auth";
-    import { Firestore } from "firebase/firestore";
-
+// src/lib/firebase.d.ts
+declare module '@/lib/firebase' {
+    import { Auth } from 'firebase/auth';
+  
     export const auth: Auth;
-    export const db: Firestore;
-}
+  }
+  
